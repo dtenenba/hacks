@@ -1,7 +1,7 @@
-#library(AnnotationHubServer)
-#library(AnnotationHubData)
-#preparerInstance <- do.call("EnsemblFastaImportPreparer", list())
-#allmd <- newResources(preparerInstance, list())
+library(AnnotationHubServer)
+library(AnnotationHubData)
+preparerInstance <- do.call("EnsemblFastaImportPreparer", list())
+allmd <- newResources(preparerInstance, list())
 
 
 hackfasta <- function(ahroot=file.path(Sys.getenv("HOME"), "ahroot2"),
