@@ -27,7 +27,6 @@ hackfasta <- function(ahroot=file.path(Sys.getenv("HOME"), "ahroot2"),
             metadata(md)$RDataPath <- rz
             print(metadata(md)$SourceUrl)
             recipe <- AnnotationHubRecipe(md)
-            browser()
             run(recipe)
         }
     }
