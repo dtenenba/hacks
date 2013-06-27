@@ -22,7 +22,7 @@ hackgtf <- function(ahroot=file.path(Sys.getenv("HOME"), "ahroot2"),
       md <- allmd[[which(grepl(pat, sourceurls))]]
       gtfmd <- append(gtfmd, md)
       metadata(md)$AnnotationHubRoot <- ahroot
-      print("hi")
+      print(metadata(md)$SourceUrl)
       recipe <- AnnotationHubRecipe(md)
       run(recipe)
     }
