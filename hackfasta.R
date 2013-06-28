@@ -1,3 +1,6 @@
+.printf <- function(...) print(noquote(sprintf(...)))
+
+
 library(AnnotationHubServer)
 library(AnnotationHubData)
 preparerInstance <- do.call("EnsemblFastaImportPreparer", list())
@@ -17,12 +20,14 @@ hackfasta <- function(ahroot=file.path(Sys.getenv("HOME"), "ahroot2"),
     print(fastafiles)
     for (fastafile in fastafiles)
     {
+        .printf("processing %s.", fastafile)
         pat <- paste(fastafile, "$", sep="")
         #gzpat <- sub(".rz$", ".gz", fastafile)
         #gzpat <- paste(gzpat, "$", sep="")
         #print(gzpat)
         if (any(grepl(pat, sourceurls)))
         {
+            
             md <- allmd[[which(grepl(pat, sourceurls))]]
             allmd <- append(all, md)
             metadata(md)$AnnotationHubRoot <- ahroot
