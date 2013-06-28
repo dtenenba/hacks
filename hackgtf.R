@@ -1,7 +1,7 @@
 library(AnnotationHubServer)
 library(AnnotationHubData)
 preparerInstance <- do.call("EnsemblGtfImportPreparer", list())
-if (!exists(allmd))
+if (!exists("allmd"))
     allmd <- newResources(preparerInstance, list())
 
 .printf <- function(...) print(noquote(sprintf(...)))
