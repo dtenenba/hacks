@@ -8,7 +8,7 @@ if (!exists("allmd"))
 hackfasta <- function(ahroot=file.path(Sys.getenv("HOME"), "ahroot2"),
   rootdir=file.path(ahroot, "ensembl"))
 {
-    allmd <- list()
+    all <- list()
     sourceurls <- unlist(lapply(allmd, function(x){
         md <- metadata(x)
         md$SourceUrl
@@ -24,7 +24,7 @@ hackfasta <- function(ahroot=file.path(Sys.getenv("HOME"), "ahroot2"),
         if (any(grepl(pat, sourceurls)))
         {
             md <- allmd[[which(grepl(pat, sourceurls))]]
-            allmd <- append(allmd, md)
+            allmd <- append(all, md)
             metadata(md)$AnnotationHubRoot <- ahroot
             rz <- sub(".gz$", ".rz", metadata(md)$RDataPath)
             metadata(md)$RDataPath <- rz
@@ -42,5 +42,5 @@ hackfasta <- function(ahroot=file.path(Sys.getenv("HOME"), "ahroot2"),
             })
         }
     }
-    allmd
+    all
 }
