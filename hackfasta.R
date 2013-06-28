@@ -1,12 +1,14 @@
 library(AnnotationHubServer)
 library(AnnotationHubData)
 preparerInstance <- do.call("EnsemblFastaImportPreparer", list())
-allmd <- newResources(preparerInstance, list())
+if (!exists("allmd"))
+    allmd <- newResources(preparerInstance, list())
 
 
 hackfasta <- function(ahroot=file.path(Sys.getenv("HOME"), "ahroot2"),
   rootdir=file.path(ahroot, "ensembl"))
 {
+    allmd <- list()
     sourceurls <- unlist(lapply(allmd, function(x){
         md <- metadata(x)
         md$SourceUrl
@@ -22,12 +24,23 @@ hackfasta <- function(ahroot=file.path(Sys.getenv("HOME"), "ahroot2"),
         if (any(grepl(pat, sourceurls)))
         {
             md <- allmd[[which(grepl(pat, sourceurls))]]
+            allmd <- append(allmd, md)
             metadata(md)$AnnotationHubRoot <- ahroot
             rz <- sub(".gz$", ".rz", metadata(md)$RDataPath)
             metadata(md)$RDataPath <- rz
             print(metadata(md)$SourceUrl)
+            destfile = file.path(ahroot, metadata(md)$RDataPath)
+            if (file.exists(destfile))
+            {
+                .printf("file %s exists, skipping", destfile)
+                next
+            }
             recipe <- AnnotationHubRecipe(md)
-            run(recipe)
+            tryCatch(run(recipe), error=function(e){
+                warning(sprintf("ERROR: %s, %s", metadata(md)$SourceUrl,
+                                conditionMessage(e)))  
+            })
         }
     }
+    allmd
 }
