@@ -31,7 +31,10 @@ hackgtf <- function(ahroot=file.path(Sys.getenv("HOME"), "ahroot2"),
           next
       }
       recipe <- AnnotationHubRecipe(md)
-      run(recipe)
+      tryCatch(run(recipe), error=function(e){
+        warning(sprintf("ERROR: %s, %s", metadata(md)$SourceUrl,
+                conditionMessage(e)))  
+      })
       gtfmd <- append(gtfmd, md)
     }
   }
