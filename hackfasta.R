@@ -27,7 +27,8 @@ hackfasta <- function(ahroot=file.path(Sys.getenv("HOME"), "ahroot2"),
         #print(gzpat)
         if (any(grepl(pat, sourceurls)))
         {
-            
+            .printf("pat is %s", pat)
+            .printf("matches are %s", paste(which(grepl(pat, sourceurls))))
             md <- allmd[[which(grepl(pat, sourceurls))]]
             allmd <- append(all, md)
             metadata(md)$AnnotationHubRoot <- ahroot
