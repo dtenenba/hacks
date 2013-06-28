@@ -22,7 +22,6 @@ hackgtf <- function(ahroot=file.path(Sys.getenv("HOME"), "ahroot2"),
     if (any(grepl(pat, sourceurls)))
     {
       md <- allmd[[which(grepl(pat, sourceurls))]]
-      gtfmd <- append(gtfmd, md)
       metadata(md)$AnnotationHubRoot <- ahroot
       print(metadata(md)$SourceUrl)
       destfile = file.path(ahroot, metadata(md)$RDataPath)
@@ -33,6 +32,7 @@ hackgtf <- function(ahroot=file.path(Sys.getenv("HOME"), "ahroot2"),
       }
       recipe <- AnnotationHubRecipe(md)
       run(recipe)
+      gtfmd <- append(gtfmd, md)
     }
   }
   gtfmd
